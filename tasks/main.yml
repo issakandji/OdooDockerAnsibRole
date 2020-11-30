@@ -1,0 +1,10 @@
+---
+# tasks file for dodoopm 
+
+- include_tasks: setup-Debian.yml
+
+- include_tasks: docker-users.yml
+  when: docker_users | length > 0
+
+- include_tasks: odoo-compose.yml
+

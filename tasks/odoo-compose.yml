@@ -1,0 +1,40 @@
+---
+- name : Run DB Services
+  docker_container:
+    name: 'db'
+    image: 'postgres:10'
+    env:
+      POSTGRES_DB: "postgres"
+      POSTGRES_PASSWORD: "My@odooEncryptMe"
+      POSTGRES_USER: "odoouser"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - "odoo-db-data:/var/lib/postgresql/data/pgdata"
+
+- name: Get infos on container
+  docker_container_info:
+    name:
+     db
+  register: result
+
+- name: Does container exist?
+  debug:
+    msg: "The container {{ 'exists' if result.exists else 'does not exist' }}"
+
+- name: Print information about container
+  debug:
+    var: result.container.NetworkSettings.IPAddress
+  when: result.exists
+
+
+
+- name : Run Odoo Services
+  docker_container:
+    name: 'web'
+    image: 'odoo:12.0'
+    published_ports:
+      - "8069:8069"
+    volumes:
+      - "odoo-web-data:/var/lib/odoo"
+    etc_hosts: 
+     db: "{{ result.container.NetworkSettings.IPAddress }}"

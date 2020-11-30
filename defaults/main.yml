@@ -1,0 +1,16 @@
+---
+# defaults file for dodoopm
+
+# Docker Service options.
+docker_service_state: 
+ - started
+docker_service_enabled: 
+ - true
+
+
+# A list of users who will be added to the docker group.
+docker_users:
+ - issa
+
+ #Odoo Services options
+# odoo_network_name: 'odoo'
