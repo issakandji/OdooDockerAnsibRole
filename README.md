@@ -33,7 +33,7 @@ Example Playbook
 - hosts: your_server_hosname
   become: true
   roles:
-    - ansible-odoo-role
+    - OdooDockerAnsibRole
 
 License
 -------
