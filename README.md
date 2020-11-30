@@ -43,4 +43,4 @@ Use at your risk and do not forget to ping when enhanced
 Author Information
 ------------------
 
-Check meta fro contact info
+Check meta for contact info
