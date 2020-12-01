@@ -42,3 +42,9 @@ Author Information
 ------------------
 
 Check meta for contact info
+
+
+##### Next step
+- [x] review README
+- [ ] Use a odoo conf file with local volume
+- [ ] Improvement
