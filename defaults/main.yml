@@ -7,7 +7,8 @@
 
 # A list of users who will be added to the docker group.
 docker_users:
- - issa
+  - issa
 
  #Odoo Services options
-# odoo_network_name: 'odoo'
+Odoo_network_name:
+  - OdooNet

@@ -54,3 +54,13 @@
 
 - name: Ensure handlers are notified now to avoid firewall conflicts.
   meta: flush_handlers
+
+- name: Create Odoo Network
+  docker_network:
+      name: OdooNet
+      driver: bridge
+      ipam_config:
+      - subnet: 192.168.0.0/16
+        gateway: 192.168.0.1
+        iprange: 192.168.0.0/16
+      

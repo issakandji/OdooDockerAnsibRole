@@ -3,6 +3,14 @@
   docker_container:
     name: 'db'
     image: 'postgres:10'
+    restart_policy: always
+    hostname: odoodb
+    purge_networks: yes
+    networks:
+      - name: OdooNet
+        ipv4_address: 192.168.0.3
+        aliases: 
+        - odoodb
     env:
       POSTGRES_DB: "postgres"
       POSTGRES_PASSWORD: "My@odooEncryptMe"
@@ -11,20 +19,20 @@
     volumes:
       - "odoo-db-data:/var/lib/postgresql/data/pgdata"
 
-- name: Get infos on container
-  docker_container_info:
-    name:
-     db
-  register: result
+#- name: Get db container infos 
+#  docker_container_info:
+#    name:
+#     db
+#  register: result
 
-- name: Does container exist?
-  debug:
-    msg: "The container {{ 'exists' if result.exists else 'does not exist' }}"
+#- name: Does container exist?
+#  debug:
+#    msg: "The container {{ 'exists' if result.exists else 'does not exist' }}"
 
-- name: Print information about container
-  debug:
-    var: result.container.NetworkSettings.IPAddress
-  when: result.exists
+#- name: Print information about container
+#  debug:
+#    var: result.container.NetworkSettings.IPAddress
+#  when: result.exists
 
 
 
@@ -32,9 +40,21 @@
   docker_container:
     name: 'web'
     image: 'odoo:12.0'
+    restart_policy: always
+    hostname: odooweb
+    purge_networks: yes
+    networks:
+      - name: OdooNet
+        ipv4_address: 192.168.0.2
+        aliases: 
+          - odooweb
+        links:
+          - db:db
     published_ports:
       - "8069:8069"
     volumes:
       - "odoo-web-data:/var/lib/odoo"
-    etc_hosts: 
-     db: "{{ result.container.NetworkSettings.IPAddress }}"
+
+
+#    etc_hosts: 
+#     db: "{{ result.container.NetworkSettings.IPAddress }}"
